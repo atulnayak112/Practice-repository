@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Registration Form</title>
+<style>
+    /* Reset and base */
+    * {
+        box-sizing: border-box;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5a623 0%, #f76b1c 50%, #f54ea2 100%);
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* Funky floating circles background */
+    body::before,
+    body::after {
+        content: "";
+        position: fixed;
+        border-radius: 50%;
+        opacity: 0.15;
+        filter: blur(70px);
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        z-index: 0;
+    }
+    body::before {
+        width: 300px;
+        height: 300px;
+        background: #ff4669;
+        top: 15%;
+        left: -100px;
+        animation-name: float1;
+        animation-duration: 6s;
+    }
+    body::after {
+        width: 400px;
+        height: 400px;
+        background: #18d8f3;
+        bottom: 10%;
+        right: -150px;
+        animation-name: float2;
+        animation-duration: 8s;
+    }
+
+    @keyframes float1 {
+        0% { transform: translateY(0) translateX(0) scale(1); }
+        50% { transform: translateY(-40px) translateX(15px) scale(1.1); }
+        100% { transform: translateY(0) translateX(0) scale(1); }
+    }
+    @keyframes float2 {
+        0% { transform: translateY(0) translateX(0) scale(1); }
+        50% { transform: translateY(30px) translateX(-20px) scale(1.05); }
+        100% { transform: translateY(0) translateX(0) scale(1); }
+    }
+
+    /* Form container */
+    form {
+        background: rgba(255 255 255 / 0.95);
+        padding: 30px 40px;
+        max-width: 500px;
+        width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1rem;
+        color: #2e2e2e;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 2rem;
+        user-select: none;
+        text-shadow: 1px 1px 6px rgba(245, 74, 146, 0.5);
+    }
+
+    legend {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #ff3c78;
+        margin-bottom: 20px;
+        letter-spacing: 0.8px;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #9767c3;
+        user-select: none;
+        font-size: 1rem;
+    }
+
+    /* Input styling */
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 2px solid #d7cdea;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        font-weight: 500;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="date"]:focus {
+        outline: none;
+        border-color: #ff3c78;
+        box-shadow: 0 0 8px 2px rgba(255, 60, 120, 0.5);
+    }
+
+    /* Custom File Input */
+    /* Hide native file input */
+    input[type="file"] {
+        display: none;
+    }
+
+    /* Custom label to style file input */
+    .custom-file-label {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(270deg, #ff3c78, #ff835c, #ff3c78);
+        background-size: 600% 600%;
+        border-radius: 12px;
+        font-weight: 700;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(255, 60, 120, 0.5);
+        transition: box-shadow 0.3s ease;
+        user-select: none;
+        animation: gradientAnimation 10s ease infinite;
+        text-align: center;
+        font-size: 1rem;
+        max-width: 250px;
+    }
+
+    .custom-file-label:hover {
+        box-shadow: 0 8px 22px rgba(255, 60, 120, 0.8);
+        animation-play-state: paused;
+        background-position: 100% 0;
+    }
+
+    /* Display file name */
+    .file-name {
+        margin-left: 15px;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #666;
+        vertical-align: middle;
+        user-select: text;
+    }
+
+    /* Radio buttons nicely spaced */
+    .gender-inputs {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 20px;
+    }
+
+    input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    /* Radio labels style */
+    .gender-labels label {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #9767c3;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /* Checkbox styling */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0 25px;
+        cursor: pointer;
+        user-select: none;
+        color: #9767c3;
+        font-weight: 600;
+    }
+
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: #ff3c78;
+        border-radius: 6px;
+    }
+
+    /* Submit button with gradient + animation */
+    button[type="submit"] {
+        background: linear-gradient(270deg, #ff3c78, #ff835c, #ff3c78);
+        background-size: 600% 600%;
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        padding: 15px 0;
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(255, 60, 120, 0.5);
+        transition: box-shadow 0.3s ease;
+        animation: gradientAnimation 10s ease infinite;
+        user-select: none;
+    }
+
+    button[type="submit"]:hover {
+        box-shadow: 0 8px 22px rgba(255, 60, 120, 0.8);
+        animation-play-state: paused;
+        background-position: 100% 0;
+    }
+
+    /* Gradient animation for button */
+    @keyframes gradientAnimation {
+        0% {background-position: 0% 50%}
+        50% {background-position: 100% 50%}
+        100% {background-position: 0% 50%}
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+        form {
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+        }
+        legend {
+            font-size: 1.3rem;
+        }
+        button[type="submit"] {
+            font-size: 1.1rem;
+            padding: 14px 0;
+        }
+        .custom-file-label {
+            max-width: 100%;
+        }
+        .file-name {
+            display: block;
+            margin-left: 0;
+            margin-top: 8px;
+        }
+    }
+
+    /* Animated bird container */
+    #bird-container {
+        pointer-events: none;
+        position: fixed;
+        top: 30vh;
+        left: -150px;
+        width: 150px;
+        height: 150px;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Flying animation */
+    @keyframes flyRight {
+        0% {
+            transform: translateX(0) translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        25% {
+            transform: translateX(25vw) translateY(-5vh) rotate(10deg);
+        }
+        50% {
+            transform: translateX(50vw) translateY(0) rotate(0deg);
+        }
+        75% {
+            transform: translateX(75vw) translateY(5vh) rotate(-10deg);
+        }
+        100% {
+            transform: translateX(110vw) translateY(0) rotate(0deg);
+            opacity: 0;
+        }
+    }
+
+    #bird-container.fly {
+        opacity: 1;
+        animation: flyRight 5s ease forwards;
+    }
+
+    /* Bird SVG styles */
+    svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.15));
+    }
+
+    /* Wings flapping animation */
+    .wing-left, .wing-right {
+        transform-origin: center;
+        animation: flap 1.2s infinite ease-in-out;
+    }
+
+    .wing-right {
+        animation-delay: 0.6s;
+    }
+
+    @keyframes flap {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(15deg); }
+    }
+</style>
+</head>
+<body>
+    <form id="registration-form" novalidate>
+        <h1>Registration Form</h1>
+        <fieldset>
+            <legend>Students</legend>
+            
+            <label for="name">Full Name :</label>
+            <input placeholder="Enter your full name" type="text" id="name" required>
+            
+            <label for="father-name">Father's Name :</label>
+            <input type="text" id="father-name" placeholder="Enter father's name" required>
+            
+            <label for="mother-name">Mother's Name :</label>
+            <input id="mother-name" type="text" placeholder="Enter mother's name" required>
+
+            <label for="dob">Date of Birth :</label>
+            <input id="dob" type="date" required>
+
+            <label>Gender:</label>
+            <div class="gender-inputs">
+                <div class="gender-labels">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">Male</label>
+                </div>
+                <div class="gender-labels">
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+            </div>
+
+            <label for="mail">E-mail :</label>
+            <input id="mail" type="email" placeholder="Enter email" required>
+            
+            <label for="document">Attach Certificate :</label>
+            <label class="custom-file-label" for="document">Choose File</label> 
+            <input id="document" type="file" required>
+            <span class="file-name" id="file-name">No file chosen</span>
+
+            <label class="checkbox-container" for="checkbox">
+                <input id="checkbox" type="checkbox" required>
+                Accept Terms & Conditions
+            </label>
+
+            <button type="submit">Submit Form</button>
+        </fieldset>
+    </form>
+
+    <!-- Bird container -->
+    <div id="bird-container" aria-hidden="true" >
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flying bird">
+            <!-- Body -->
+            <ellipse cx="50" cy="55" rx="25" ry="15" fill="#ff3c78"/>
+            <!-- Wings -->
+            <path class="wing-left" d="M35 55 Q20 35 45 30" stroke="#ff835c" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path class="wing-right" d="M65 55 Q80 35 55 30" stroke="#ff835c" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <!-- Eye -->
+            <circle cx="60" cy="55" r="3" fill="#fff"/>
+            <circle cx="61" cy="55" r="1" fill="#ff3c78"/>
+        </svg>
+    </div>
+
+    <script>
+        // File input custom label update
+        const fileInput = document.getElementById('document');
+        const fileNameDisplay = document.getElementById('file-name');
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = fileInput.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'No file chosen';
+            }
+        });
+
+        // Form submit handling with bird animation
+        const form = document.getElementById('registration-form');
+        const bird = document.getElementById('bird-container');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // prevent actual submission
+
+            // Basic form validation — HTML5 attribute required handles most
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Show bird animation
+            bird.classList.add('fly');
+
+            // Disable submit button while animation plays
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+
+            // After animation end (5 seconds), hide bird and enable button
+            bird.addEventListener('animationend', () => {
+                bird.classList.remove('fly');
+                submitBtn.disabled = false;
+            }, {once: true});
+        });
+    </script>
+</body>
+</html>
+

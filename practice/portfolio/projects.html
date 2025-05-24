@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(0, 255, 255, 0.15) 1px, transparent 0),
+                linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            background-size: 20px 20px, 100% 100%;
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated grid overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating particles */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 150, 0.08) 0%, transparent 2px),
+                radial-gradient(circle at 40% 60%, rgba(0, 255, 100, 0.06) 0%, transparent 2px);
+            animation: particleFloat 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-30px) rotate(180deg); 
+                opacity: 0.8;
+            }
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        fieldset {
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Terminal-like header */
+        fieldset::before {
+            content: '● ● ●';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            letter-spacing: 0.5rem;
+            z-index: 3;
+        }
+
+        fieldset::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                #00ffff 0%, 
+                #ff00aa 25%, 
+                #00ff88 50%, 
+                #ffaa00 75%, 
+                #00ffff 100%);
+            background-size: 400% 400%;
+            animation: terminalGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes terminalGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                filter: brightness(1);
+            }
+            50% { 
+                background-position: 100% 50%;
+                filter: brightness(1.5);
+            }
+        }
+
+        legend {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ffff, #ff00aa, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        legend::before {
+            content: '< ';
+            position: absolute;
+            left: -2rem;
+            color: #00ffff;
+            animation: blink 2s infinite;
+        }
+
+        legend::after {
+            content: ' />';
+            position: absolute;
+            right: -2rem;
+            color: #00ffff;
+            animation: blink 2s infinite reverse;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .project1, .project2, .project3 {
+            background: linear-gradient(145deg, 
+                rgba(20, 20, 30, 0.9) 0%, 
+                rgba(30, 30, 45, 0.8) 100%);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Project status indicators */
+        .project1::before, .project2::before, .project3::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        .project1::before { background: #00ff88; }
+        .project2::before { background: #ffaa00; }
+        .project3::before { background: #ff6b6b; }
+
+        @keyframes statusPulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 currentColor;
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.1);
+                box-shadow: 0 0 0 8px transparent;
+            }
+        }
+
+        /* Hover effects with scanning line */
+        .project1:hover, .project2:hover, .project3:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(0, 255, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.6);
+        }
+
+        .project1:hover::after, .project2:hover::after, .project3:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 255, 255, 0.1), 
+                transparent);
+            animation: scan 1.5s ease-in-out;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h1::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: currentColor;
+            animation: loading 2s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0%, 100% { height: 20px; }
+            50% { height: 10px; }
+        }
+
+        #1 { 
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        #2 { 
+            color: #ffaa00;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+        #3 { 
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        ul {
+            list-style: none;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .project1 ul {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+
+        .project2 ul {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        li {
+            background: linear-gradient(135deg, 
+                rgba(40, 40, 55, 0.8) 0%, 
+                rgba(30, 30, 45, 0.9) 100%);
+            padding: 1.8rem;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Tech stack indicators */
+        li::before {
+            content: '';
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            width: 8px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .project1 li {
+            border-left-color: #00ff88;
+            color: #e2e8f0;
+        }
+
+        .project2 li {
+            border-left-color: #ffaa00;
+            color: #e2e8f0;
+        }
+
+        .project3 li {
+            border-left-color: #ff6b6b;
+            color: #e2e8f0;
+        }
+
+        li:hover {
+            transform: translateX(8px) translateY(-4px);
+            box-shadow: 
+                0 12px 24px rgba(0, 0, 0, 0.3),
+                -8px 0 16px rgba(0, 255, 255, 0.1);
+            border-left-width: 5px;
+            background: linear-gradient(135deg, 
+                rgba(50, 50, 65, 0.9) 0%, 
+                rgba(40, 40, 55, 0.95) 100%);
+        }
+
+        li:hover::before {
+            opacity: 1;
+            animation: techPulse 0.6s ease-out;
+        }
+
+        @keyframes techPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        li:first-child {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            color: #a0aec0;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+        }
+
+        pre {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(20, 20, 30, 0.9) 100%);
+            color: #00ff88;
+            padding: 2.5rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Terminal prompt */
+        pre::before {
+            content: 'user@portfolio:~$ cat about.txt';
+            position: absolute;
+            top: 0.8rem;
+            left: 1rem;
+            color: #00ffff;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        pre::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                #00ff88, 
+                transparent);
+            animation: terminalScan 3s ease-in-out infinite;
+        }
+
+        @keyframes terminalScan {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 968px) {
+            body {
+                padding: 1rem;
+                background-size: 15px 15px, 100% 100%;
+            }
+            
+            fieldset {
+                padding: 2rem;
+            }
+            
+            legend {
+                font-size: 1.8rem;
+            }
+            
+            .project1, .project2, .project3 {
+                padding: 1.8rem;
+            }
+            
+            ul {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            pre {
+                padding: 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            legend::before,
+            legend::after {
+                display: none;
+            }
+            
+            fieldset::before {
+                font-size: 1rem;
+                letter-spacing: 0.3rem;
+            }
+        }
+
+        /* Enhanced animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+
+        .project1, .project2, .project3 {
+            animation: fadeInUp 1s ease-out forwards;
+            transform-style: preserve-3d;
+        }
+
+        .project1 { animation-delay: 0.2s; }
+        .project2 { animation-delay: 0.4s; }
+        .project3 { animation-delay: 0.6s; }
+
+        /* Code syntax highlighting effect */
+        li:first-child::after {
+            content: ' { }';
+            color: #ff00aa;
+            font-weight: normal;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <fieldset>
+            <legend>MY PROJECTS</legend>
+        
+            <div class="project1">
+                <h1 id="1">project 1</h1>
+                    <ul>
+                        <li>tech 1
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sunt aliquam fuga aperiam unde, provident vero non ullam quis deleniti ex veniam officia labore et.</p>
+                        </li>
+                        <li>tech 2
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia iusto, tempore impedit quisquam, voluptatibus ad, quasi consequatur quaerat dicta ducimus et nostrum nesciunt veritatis adipisci?</p>
+                        </li>
+                        <li>tech 3
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis, blanditiis ab. Amet, tempora rem! Repellendus explicabo dolorum nulla accusamus aliquam, dolor dignissimos sequi veniam. Numquam?</p>
+                    </li>
+                    <li>tech 4
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus placeat maiores pariatur, enim explicabo dignissimos labore earum culpa aut nulla deleniti modi facilis eveniet delectus expedita recusandae ea odit impedit. Animi ut ipsam iure voluptates veritatis? Eius natus repudiandae deleniti repellat molestiae voluptatem totam culpa.</p>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="project2">
+                <h1 id="2">Project 2</h1>
+                    <ul>
+                        <li>tech 1</li>
+                        <li>tech 2</li>
+                    </ul>
+            </div>
+            <div class="project3">
+                <h1 id="3">project 3</h1>
+                    <pre>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit doloribus voluptatem perspiciatis aliquid dignissimos nihil autem alias ut quisquam rem incidunt voluptas deleniti itaque dicta inventore soluta accusamus unde aspernatur, nisi temporibus. Nulla, harum laborum.</pre>
+            </div>
+        </fieldset>
+    </main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <form>
+        <h1>Registration form for Faculity</h1>
+        <fieldset>
+            <legend>For Faculity</legend>
+
+            <label for="name">Full Name :</label>
+            <input id="name" type="text" placeholder="enter name">
+
+            <label for="mail">E-mail :</label>
+            <input id="mail" type="email" placeholder="enter email">
+
+            <label for="post">Post</label>
+            <select>
+                <option value="post1">Director</option>
+                <option value="post2">Principal</option>
+                <option value="post3">Professor</option>
+                <option value="post4">Assistant</option>
+                <option value="post5">Teacher</option>
+            </select>
+            <br>
+            <label>For Contact :</label><br>
+            <label for="contact">E-mail</label>
+            <input id="contact" type="email" name="contact" checked>
+            <label for="contact">Phone :</label>
+            <input id="contact" type="tel" name="contact" >
+
+
+            <fieldset>
+                <legend>Career</legend>
+                <label>Graduation :</label>
+                <select multiple>
+                    <option>BSc Computer Sciene</option>
+                    <option>BSc Data Sciene</option>
+                    <option>BSc Machne Learning</option>
+                    <option>BSc Robotics</option>
+                    <option>BBA</option>
+                    <option>BSc SDS</option>
+
+                </select>
+
+                <label for="counter">Experience</label>
+                <input type="number" name="counter" id="counter" min="0" max="50">
+
+                <label for="certificate">Certifiates :</label>
+                <input type="file" id="certificate" name="certificate">
+            </fieldset>
+              <input id="checkbox" type="checkbox" >
+            <label for="checkbox">Accept Terms & Conditions</label>
+            <br>
+            <button type="button">Submit Form</button>
+        </fieldset>
+    </form>
+</body>
+</html>

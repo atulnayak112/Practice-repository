@@ -1,0 +1,113 @@
+body {
+    background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  background-image: linear-gradient(-225deg, #3498db 0, #9b59b6 29%, #e74c3c 67%, #f1c40f 100%);
+  background-size: 500% 500%;
+  animation: bg 8s linear infinite;
+}
+@keyframes bg {
+  50% { background-position: 100% 100%; }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+:is(h1, h2, h3) {
+  font-family: 'Montserrat', sans-serif;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+select[multiple] {
+    width: 260px;
+    height: 220px;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 24px 0 rgba(67, 198, 172, 0.15);
+    font-size: 1.1rem;
+    color: #333;
+    padding: 16px 12px;
+    outline: none;
+    transition: box-shadow 0.3s, background 0.3s;
+    appearance: none;
+    cursor: pointer;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #43c6ac #f8ffae;
+}
+
+/* Custom scrollbar for Webkit browsers */
+select[multiple]::-webkit-scrollbar {
+    width: 8px;
+    background: #f8ffae;
+    border-radius: 8px;
+}
+select[multiple]::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #43c6ac 0%, #191654 100%);
+    border-radius: 8px;
+}
+
+select[multiple]:focus {
+    box-shadow: 0 0 0 3px #43c6ac55;
+    background: rgba(255,255,255,0.95);
+}
+
+option {
+    padding: 10px 8px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* Selected option styling */
+select[multiple] option:checked {
+    background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Hover effect for options (works in most browsers) */
+select[multiple]:hover option:hover {
+    background: #e0f7fa;
+    color: #191654;
+}
+img:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Remove default arrow for select */
+select[multiple]::-ms-expand {
+    display: none;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.spinner {
+  animation: spin 1s linear infinite;
+}
